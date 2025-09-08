@@ -42,7 +42,7 @@ Mô hình mạng được triển khai trên VMware:
 
 ## 4. Cài đặt pfSense
 1. Khởi động máy ảo pfSense → chọn **Install**.  
-   ![Install pfSense](images/pfsense-install.png)
+   ![Install pfSense](images/Picture7.png)
 
 2. Gán card mạng:  
    - **WAN** → External (10.10.19.0/24)  
