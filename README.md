@@ -11,7 +11,8 @@
 - `report/` – Báo cáo gốc (DOCX/PDF)
 - `lab-guide.md` – Tóm tắt hướng dẫn từng bước
 
-![Uploading image.png…]()
+
+
 
 ## ⚙️ Nội dung chính
 - **Cấu hình mạng trong VMware/VirtualBox**
