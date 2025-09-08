@@ -10,7 +10,7 @@
 ## 📂 Cấu trúc repo
 - `report/` – Báo cáo gốc (DOCX/PDF)
 - `lab-guide.md` – Tóm tắt hướng dẫn từng bước
-
+- `images/` - Thư mục hình ảnh
 
 
 
