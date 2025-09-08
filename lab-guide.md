@@ -21,7 +21,7 @@
 ### 3.1 Topology
 Mô hình mạng được triển khai trên VMware:  
 
-![Network Topology](images/topology.png)
+![Network Topology](images/Pfsense_topo.jpg)
 
 ### 3.2 Subnet
 - **External:** `10.10.19.0/24` (vmnet11)  
