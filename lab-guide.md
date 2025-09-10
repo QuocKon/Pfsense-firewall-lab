@@ -103,10 +103,20 @@ Mô hình mạng được triển khai trên VMware:
  ## Cấu hình Topo mạng
  Tạo thêm 2 Subnet trên Vmware vmnet11 có địa chỉ 10.10.19.0/24 cho mạng External và vmnet10 có địa chỉ 192.168.100.0/24 cho mạng Internal.
  ![img](images/Picture1.png)
+ ## Cấu hình địa chỉ IP cho các máy
+  - Mạng Internal
+   Cấu hình IP tĩnh cho máy Kali Attank Internal
  ![img](images/Picture2.png)
+ Cấu hình máy Windows Server Internal. IP :192.168.100.201
  ![img](images/Picture3.png)
+   Cấu hình máy Ubuntu Internal. IP: 192.168.100.147
  ![img](images/Picture4.png)
+ -Mạng External
+ Cấu hình IP cho máy Kali Attank External
  ![img](images/Picture5.png)
+ Cấu hình máy Window Server mạng External. IP: 10.10.19.202
+ ## Cấu hình máy Pfsense
+ Chọn Install để cài đặt
  ![img](images/Picture6.png)
  ![img](images/Picture7.png)
  ![img](images/Picture8.png)
