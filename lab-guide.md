@@ -124,35 +124,67 @@ Mô hình mạng được triển khai trên VMware:
  
  
  ![img](images/Picture5.png)
- 
+
  Cấu hình máy Window Server mạng External. IP: 10.10.19.202
- ## Cấu hình máy Pfsense
- Chọn Install để cài đặt
+ 
  ![img](images/Picture6.png)
+
+## Cấu hình máy Pfsense
+ Chọn Install để cài đặt
 
  ![img](images/Picture7.png)
 
+Cài đặt thành công. Chọn lựa chọn 2 để cấu hình cho mạng WAN và LAN
+
  ![img](images/Picture8.png)
+
+Sau khi cấu hình xong, ta được kết quả như sau:
 
  ![img](images/Picture9.png)
 
+## Kiểm tra kết nối giữa các máy
+# Kiểm tra kết nối giữa các máy Internal
+Ping từ máy Windows Server đến máy Kali và máy Ubuntu trong mạng Internal.
+
  ![img](images/Picture10.png)
+
+Ping từ máy Kali đến máy Windows server và máy Ubuntu trong mạng Internal.
 
  ![img](images/Picture11.png)
 
+Ping từ máy Ubuntu đến máy Windows Server và Kali trong mạng Internal.
+
  ![img](images/Picture12.png)
+
+# Kiểm tra kết nối giữa các máy External.
+Máy Kali External ping tới Windows Server External
 
  ![img](images/Picture13.png)
 
+Máy Kali External ping tới Window Sever External
+
  ![img](images/Picture14.png)
+
+# Kiểm tra kết nối giữa các máy Internal, External và máy Pfsense.
+Máy Ubuntu Internal ping tới máy Pfsense
 
  ![img](images/Picture15.png)
 
+Máy Pfsense ping tới máy Ubuntu Internal
+
  ![img](images/Picture16.png)
+
+Máy Pfsense ping tới máy Kali External
 
  ![img](images/Picture17.png)
 
+## Máy Pfsense ping tới máy Kali External
+- Trên máy Linux victim ở mạng trong, vào trình duyệt gõ http://192.168.100.1 để cấu hình pfsense qua giao diện web.
+-> Đăng nhập với username: admin & passwork: pfsense
+
  ![img](images/Picture18.png)
+
+Cấu hình thành công pfsense qua giao diện web
 
  ![img](images/Picture19.png)
 
