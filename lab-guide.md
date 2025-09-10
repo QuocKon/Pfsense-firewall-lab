@@ -1,13 +1,13 @@
 # 🧪 Lab Guide – Pfsense Firewall Lab
 
-## 1. Mục tiêu
+## Mục tiêu
 - Xây dựng mô hình mạng doanh nghiệp gồm 2 subnet **Internal** và **External**.
 - Cài đặt và cấu hình **pfSense Firewall**.
 - Kiểm tra kết nối, triển khai **firewall rule** và **port forwarding**.
 
 ---
 
-## 2. Chuẩn bị môi trường
+## Chuẩn bị môi trường
 - **Phần mềm:** VMware Workstation / VirtualBox  
 - **Máy ảo sử dụng:**
   - pfSense Firewall
@@ -16,88 +16,6 @@
   - Ubuntu (Internal)
 
 ---
-
-## 3. Cấu hình mạng
-### 3.1 Topology
-Mô hình mạng được triển khai trên VMware:  
-
-![Network Topology](images/Pfsense_topo.jpg)
-
-### 3.2 Subnet
-- **External:** `10.10.19.0/24` (vmnet11)  
-- **Internal:** `192.168.100.0/24` (vmnet10)  
-
-### 3.3 Địa chỉ IP mẫu
-| Máy ảo              | Interface | IP Address        |
-|---------------------|-----------|------------------|
-| pfSense (WAN)       | External  | 10.10.19.1       |
-| pfSense (LAN)       | Internal  | 192.168.100.1    |
-| Windows Server Ext  | External  | 10.10.19.202     |
-| Windows Server Int  | Internal  | 192.168.100.201  |
-| Ubuntu Internal     | Internal  | 192.168.100.147  |
-| Kali External       | External  | DHCP / Static    |
-| Kali Internal       | Internal  | DHCP / Static    |
-
----
-
-## 4. Cài đặt pfSense
-1. Khởi động máy ảo pfSense → chọn **Install**.  
-   ![Install pfSense](images/Picture7.png)
-
-2. Gán card mạng:  
-   - **WAN** → External (10.10.19.0/24)  
-   - **LAN** → Internal (192.168.100.0/24)  
-
-3. Sau khi cài đặt, truy cập pfSense qua **Web GUI** tại:  
-   - `http://192.168.100.1`  
-   - User: `admin` / Pass: `pfsense`  
-
-   ![Login GUI](images/pfsense-login.png)
-
----
-
-## 5. Kiểm tra kết nối
-- **Internal:** Ping giữa Windows, Ubuntu, Kali.  
-  ![Ping Internal](images/ping-internal.png)
-
-- **External:** Ping giữa Windows và Kali.  
-  ![Ping External](images/ping-external.png)
-
-- **Qua pfSense:** Ping từ pfSense tới Internal & External.  
-  ![Ping pfSense](images/ping-pfsense.png)
-
----
-
-## 6. Cấu hình Firewall Rule (ICMP)
-1. Vào **Firewall → Rules**.  
-   ![Firewall Rules](images/firewall-rules.png)
-
-2. Thêm rule cho phép **ICMP từ External → WAN pfSense (10.10.19.1)**.  
-   ![Add ICMP Rule](images/add-icmp-rule.png)
-
-3. Apply changes và kiểm tra:  
-   ![Ping ICMP Test](images/ping-icmp.png)
-
----
-
-## 7. Port Forwarding (SSH)
-1. Vào **Firewall → NAT → Port Forward**.  
-   ![NAT Settings](images/nat-settings.png)
-
-2. Thêm rule:  
-   - Interface: WAN  
-   - Protocol: TCP  
-   - Destination: WAN Address  
-   - Destination Port: 22  
-   - Redirect target IP: `192.168.100.147` (Ubuntu)  
-   - Redirect target port: 22  
-
-   ![Port Forward Rule](images/port-forward-rule.png)
-
-3. Apply changes → kiểm tra bằng:  
-   ```bash
-   ssh user@10.10.19.1
-
 
 
  ## Cấu hình Topo mạng
@@ -188,29 +106,56 @@ Cấu hình thành công pfsense qua giao diện web
 
  ![img](images/Picture19.png)
 
+Cấu hình luật firewall để cho phép luồng ICMP ở mạng External ping được tới giao diện 10.10.19.1.
+Tại FireWall trên thanh công cụ, chọn Rules.Sau đó nhấn Add để thêm luật. Chỉnh sửa các mục như các ảnh bên dưới.
+
  ![img](images/Picture20.png)
 
  ![img](images/Picture21.png)
 
+Chọn Apply Changes để lưu thay đổi.
+
  ![img](images/Picture22.png)
+
+Kiểm tra bằng các ping tới 10.10.19.1 từ máy Kali attank ở mạng External
 
  ![img](images/Picture23.png)
 
+Máy Ubuntu Internal có thể ping từ mạng Internal ra máy Kali External ở mạng ngoài
+
  ![img](images/Picture24.png)
+
+Quét các cổng mở ở mạng Internal
 
  ![img](images/Picture25.png)
 
+Quét các cổng mở ở mạng External
+
  ![img](images/Picture26.png)
+
+- Theo mặc định, có bao nhiêu cổng TCP mở trên giao diện mạng của pfSense?
++ Trong giao diện mạng Internal, theo mặc định có 2 cổng TCP được mở: Cổng 80(HTTP), Cổng 53(domain)
++ Trong giao diện mạng External không có cổng TCP nào được mở
+
+## Cài đặt cấu hình pfsense firewall cho phép chuyển hướng lưu lượng tới các máy trong mạng Internal
+- Cấu hình cho phép cổng SSH trên IP 192.168.100.147 (Máy Ubuntu Linux victim mạng Internal) được truy cập từ bên ngoài thông qua port forwarding. Nghĩa là khi các máy khách từ mạng 10.10.19.0/24 kết nối với địa chỉ IP của tường lửa pfSense của 10.10.19.1, chúng sẽ được chuyển hướng đến máy Linux victim trong mạng Internal.
 
  ![img](images/Picture27.png)
 
 
  ![img](images/Picture28.png)
 
+Nhấn Apply Change để lưu thay đổi.
+
  ![img](images/Picture29.png)
 
- ![img](images/Picture30.png)
+Kiểm tra bằng cách truy cập ssh tới 10.10.19.1 từ máy Kali External.
 
+ ![img](images/Picture30.png)
+ ## Kết luận
+- Xây dựng topo mạng và cài đặt, cấu hình địa chỉ IP thành công, các máy trong mạng ping được nhau
+- Cài đặt, cấu hình thành công ICMP cho phép các máy trong mạng Internal ping được ra các máy ở mạng External, không cho phép ping vào trong mạng Internal.
+- Cài đặt thành công cấu hình pfsense firewall cho phép chuyển hướng lưu lượng tới các máy trong mạng Internal.
 
 
 
