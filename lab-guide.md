@@ -20,6 +20,7 @@
 
  ## Cấu hình Topo mạng
  Tạo thêm 2 Subnet trên Vmware vmnet11 có địa chỉ 10.10.19.0/24 cho mạng External và vmnet10 có địa chỉ 192.168.100.0/24 cho mạng Internal.
+ 
  ![img](images/Picture1.png)
 
  ## Cấu hình địa chỉ IP cho các máy
